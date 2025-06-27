@@ -50,7 +50,7 @@ export default function TaskTable() {
   const perPage = 6;
   const router = useRouter();
   const [deleteTask, setDeleteTask] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Fetch tasks
   useEffect(() => {
