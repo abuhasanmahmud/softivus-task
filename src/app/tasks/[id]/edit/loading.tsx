@@ -1,5 +1,11 @@
+import { LoadingSkeleton } from "@/components/loader/LoadingSkeleton";
+
 const loading = () => {
-  return <div>loading.............</div>;
+  return (
+    <>
+      <LoadingSkeleton rows={3} columns={1} />
+    </>
+  );
 };
 
 export default loading;
