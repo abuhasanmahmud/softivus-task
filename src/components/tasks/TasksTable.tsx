@@ -29,7 +29,6 @@ import {
 } from "@/components/ui/pagination";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Badge } from "lucide-react";
 
 type Task = {
   _id: string;
@@ -39,12 +38,7 @@ type Task = {
   dueDate: string;
 };
 
-export default function TaskTable({
-  taskedUpdate,
-  setTaskDetails,
-  setDrawerOpen,
-  setTaskUpdate,
-}: any) {
+export default function TaskTable() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [search, setSearch] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -52,6 +46,7 @@ export default function TaskTable({
   const perPage = 8;
   const router = useRouter();
 
+  const [deleteTask, setDeleteTask] = useState(false);
   // ✅ Fetch tasks from API
   useEffect(() => {
     const fetchTasks = async () => {
@@ -69,7 +64,7 @@ export default function TaskTable({
     };
 
     fetchTasks();
-  }, [taskedUpdate]);
+  }, [deleteTask]);
 
   const filteredTasks = useMemo(() => {
     return tasks
@@ -84,9 +79,10 @@ export default function TaskTable({
   );
 
   const handelDeleteTask = async (id: string) => {
+    setDeleteTask(false);
+
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (!confirmDelete) return;
-    setTaskUpdate(false);
 
     try {
       const res = await fetch(`/api/tasks/${id}`, {
@@ -97,7 +93,7 @@ export default function TaskTable({
 
       if (res.ok) {
         alert("✅ Task deleted successfully!");
-        setTaskUpdate(true); // Trigger re-fetch or refresh list
+        setDeleteTask(true);
       } else {
         alert(`❌ Failed to delete task: ${result.message}`);
       }
