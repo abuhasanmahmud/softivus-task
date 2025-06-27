@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { TaskType } from "@/lib/type/task";
+import { toast } from "react-toastify";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -41,8 +42,10 @@ const TaskForm = ({ taskDetails }: TaskPageProps) => {
       setValue("dueDate", taskDetails.dueDate || "");
     }
   }, [taskDetails, setValue]);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: TaskFormValues) => {
+    setLoading(true);
     const isUpdate = taskDetails && taskDetails._id;
     const endpoint = isUpdate ? `/api/tasks/${taskDetails._id}` : "/api/tasks";
     const method = isUpdate ? "PUT" : "POST";
@@ -59,21 +62,26 @@ const TaskForm = ({ taskDetails }: TaskPageProps) => {
       const result = await res.json();
 
       if (res.ok) {
-        setMessage(
-          isUpdate
-            ? "✅ Task updated successfully!"
-            : "✅ Task created successfully!"
-        );
-        if (!isUpdate) {
+        setLoading(false);
+
+        if (isUpdate) {
+          toast.success("Task update successfully!");
+        } else {
+          toast.success("Task created successfully!");
           reset();
         }
       } else {
         setMessage(`❌ Error: ${result.message}`);
+        setLoading(false);
       }
     } catch (error) {
-      setMessage(
-        isUpdate ? "❌ Failed to update task" : "❌ Failed to create task"
-      );
+      setLoading(false);
+
+      if (isUpdate) {
+        toast.error("Task update erro!");
+      } else {
+        toast.error("Task created error!");
+      }
     }
   };
 
@@ -139,6 +147,11 @@ const TaskForm = ({ taskDetails }: TaskPageProps) => {
         >
           {taskDetails?._id ? "Update Task" : "Create Task"}
         </button>
+        {loading && (
+          <p className="text-center text-sm">
+            {taskDetails ? "task updating... " : "task creating..."}
+          </p>
+        )}
         {message && <p className="text-center text-sm">{message}</p>}
       </form>
     </main>

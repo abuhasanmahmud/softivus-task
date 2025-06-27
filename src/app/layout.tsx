@@ -5,6 +5,7 @@ import Navbar from "@/components/common/Navbar";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/common/AppSidebar";
+import { TostProviders } from "@/components/providers/tost-provider";
 
 export const metadata: Metadata = {
   title: "Softivus-task",
@@ -35,7 +36,7 @@ export default function RootLayout({
             <main className="w-full min-h-screen flex flex-col bg-background text-foreground">
               <Navbar />
               <div className="px-4 sm:px-6 md:px-8 lg:px-32 xl:px-48  ">
-                {children}
+                <TostProviders> {children}</TostProviders>
               </div>
             </main>
           </SidebarProvider>
