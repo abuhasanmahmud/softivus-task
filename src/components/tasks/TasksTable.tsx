@@ -193,9 +193,7 @@ export default function TaskTable({
                   <TableCell>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => {
-                          setTaskDetails(task), setDrawerOpen(true);
-                        }}
+                        onClick={() => router.push(`/tasks/${task._id}/edit`)}
                         size="sm"
                         variant="outline"
                       >
@@ -212,7 +210,7 @@ export default function TaskTable({
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => router.push(`/task-details/${task._id}`)}
+                        onClick={() => router.push(`/tasks/${task._id}`)}
                       >
                         View
                       </Button>

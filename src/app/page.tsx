@@ -26,18 +26,7 @@ const Page = () => {
         setSelectedDate={setSelectedDate}
       />
       <div className="flex items-center justify-between py-6 border px-4 mb-2 rounded-lg">
-        <h2>Tasks</h2>
-
-        <div className="flex gap-2">
-          <Button
-            onClick={() => {
-              setDrawerOpen(true), setTaskDetails({});
-            }}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add
-          </Button>
-        </div>
+        <h2>Tasks Lists</h2>
       </div>
 
       <TaskTable

@@ -13,7 +13,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 // Schema
@@ -52,6 +52,7 @@ const TaskDrawer = ({
   } = useForm<TaskFormValues>({
     resolver: zodResolver(taskSchema),
   });
+  const dateInputRef = useRef<HTMLInputElement | null>(null);
 
   const [message, setMessage] = useState("");
 
@@ -113,7 +114,7 @@ const TaskDrawer = ({
 
   return (
     <Drawer direction="right" open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="w-[500px]">
+      <DrawerContent tabIndex={-1} className="w-[1000px]">
         <DrawerHeader>
           <DrawerTitle>{taskDetails ? "Edit Task" : "Add Task"}</DrawerTitle>
           <DrawerDescription>Fill in task details below.</DrawerDescription>
@@ -162,14 +163,12 @@ const TaskDrawer = ({
                 Joining Date
               </label>
             </div>
-            <div className="sm:col-span-2">
+            <div className="relative z-[120]">
               <input
-                onChange={(e) => setSelectedDate(e.target.value)}
-                name="joiningDate"
-                value={selectedDate}
                 type="date"
-                placeholder="StaffJoiningDate"
-                className="w-full rounded-lg bg-white bg-opacity-5 border border-gray-400 px-4 py-3 focus:ring-0 outline-none"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="w-full rounded-lg bg-white border border-gray-400 px-4 py-3"
               />
             </div>
           </div>
