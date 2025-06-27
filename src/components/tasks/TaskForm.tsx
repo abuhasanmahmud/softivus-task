@@ -17,7 +17,7 @@ const taskSchema = z.object({
 type TaskFormValues = z.infer<typeof taskSchema>;
 
 type TaskPageProps = {
-  taskDetails: TaskType;
+  taskDetails: TaskType | null;
 };
 
 const TaskForm = ({ taskDetails }: TaskPageProps) => {
