@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { TaskType } from "@/lib/type/task";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -16,7 +17,7 @@ const taskSchema = z.object({
 type TaskFormValues = z.infer<typeof taskSchema>;
 
 type TaskPageProps = {
-  taskDetails: (Partial<TaskFormValues> & { _id?: string }) | null;
+  taskDetails: TaskType;
 };
 
 const TaskForm = ({ taskDetails }: TaskPageProps) => {
